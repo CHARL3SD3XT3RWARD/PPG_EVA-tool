@@ -4,8 +4,9 @@ import pandas as pd
 import scipy as sc
 from collections import defaultdict
 
+import learn
 from sklearn.metrics import precision_recall_curve, confusion_matrix
-from sklearn.metrics import roc_curve, auc
+# from sklearn.metrics import roc_curve, auc
 
 def lin_reg(signal_chunks, cross_pos):  
     """
@@ -310,18 +311,18 @@ def train_hist(validation_sets, hists, plot=False):
         scores = classify_data(scoring_hist, data_skew, data_kurt, scoring_xedges, scoring_yedges, data_anno, plot=False)
         
         #calc parameters
-        fpr, tpr, thresholds_roc = roc_curve(data_anno, scores)
-        roc_auc = auc(fpr, tpr)
+        fpr, tpr, thresholds_roc = learn.roc_curve(data_anno, scores)
+        roc_auc = learn.auc(fpr, tpr)
         
         # youden_j = tpr - fpr
         # best_idx = youden_j.argmax()
         # best_threshold = thresholds[best_idx]
         
-        precision, recall, thresholds_pr = precision_recall_curve(data_anno, scores)
+        precision, recall, thresholds_pr = learn.precision_recall_curve(data_anno, scores)
         # avg_prec = average_precision_score(data_anno, scores)
 
         #calc best threshold with f_beta score
-        beta = .12 # z.B. für FP vermeiden
+        beta = 0.12 # z.B. für FP vermeiden
         f_beta_scores = (1 + beta**2) * precision * recall / (beta**2 * precision + recall + 1e-10)
         best_idx = np.argmax(f_beta_scores)
         best_threshold = thresholds_pr[best_idx]
@@ -452,7 +453,7 @@ def test_subsets(validation_sets, mean_hist, xedges, yedges, best_thresh, plot=F
         y_pred = (scores >= best_thresh).astype(int)
             
         #confusion matrix
-        cm = confusion_matrix(data_anno, y_pred, labels=labels)
+        cm = learn.confusion_matrix(data_anno, y_pred, labels=labels)
          
         #calc parameters            
         fpr = cm[0,1]/np.sum(cm[0]) if np.sum(cm[0]) > 0 else np.nan
@@ -543,7 +544,7 @@ def test_testset(test_set, mean_hist, xedges, yedges, best_thresh, val_tupel, pl
     #prediction
     y_pred = (scores >= best_thresh).astype(int)
     #confusion matrix    
-    cm = confusion_matrix(reference, y_pred, labels=labels)
+    cm = learn.confusion_matrix(reference, y_pred, labels=labels)
     #calc parameters
     test_fpr = cm[0,1]/np.sum(cm[0]) if np.sum(cm[0]) > 0 else np.nan
     test_tpr = cm[1,1]/np.sum(cm[1]) if np.sum(cm[1]) > 0 else np.nan
@@ -587,8 +588,6 @@ def wrapping_results(prediction):
     bad = np.where(prediction == 0)[0]
     
     return len(good), len(bad), len(good)+len(bad) 
-
-
 
 
 

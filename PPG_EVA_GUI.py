@@ -8,12 +8,22 @@ Created on Fri Feb 28 14:01:14 2025
 import tkinter as tk
 from tkinter import ttk, filedialog
 import sys
+import threading
 
 import PPG_EVA_tool as eva
 
 import configparser
 
-#%%
+stop_event = threading.Event()
+
+def main_loop(testrun = False):
+    stop_event.clear()
+    if testrun:
+        eva.process(stop_event, train=False, testrun=True)    
+    else:
+        threading.Thread(target = eva.process, args=(stop_event, False, False, False), daemon=True).start()
+        
+
 
 class ConsoleRedirector:
     """Fängt print()-Ausgaben ab und leitet sie an ein Text-Widget weiter"""
@@ -23,7 +33,8 @@ class ConsoleRedirector:
     def write(self, message):
         """Schreibt den Text ins Textfeld"""
         self.text_widget.insert(tk.END, message)
-        self.text_widget.see(tk.END)  # Automatisches Scrollen
+        self.text_widget.see(tk.END)
+        self.text_widget.update_idletasks()# Automatisches Scrollen
 
     def flush(self):
         """Wird für Kompatibilität benötigt (z.B. bei `sys.stdout.flush()`)"""
@@ -36,7 +47,8 @@ def set_values():
     config['Paths'] = {
         'working_folder': working_folder ,
         'export_path': exportpath,
-        'classifier_path': r'F:\D\classifier.pkl'
+        'classifier_path': r'', #classifier
+        'training_values_path': r'' #all_data_tupöes
     }
 
     config['Settings'] = {
@@ -52,7 +64,7 @@ def set_values():
         
     }
 
-    with open(r'C:\Users\akorn\Desktop\Charié\BA\final_version\config.ini', 'w') as configfile:
+    with open(r'', 'w') as configfile: #path to configfile
         config.write(configfile)
 
 def main_window(): 
@@ -72,7 +84,7 @@ def main_window():
                 export_entry.config(state="disabled")
                 exportsearch_button.config(state="disabled")
                 
-                start_button.config(command=lambda: eva.test(x='Training Running'))
+                start_button.config(command=lambda: eva.process(stop_event, train=True))
                 
             else:
                 "disabled"
@@ -82,7 +94,7 @@ def main_window():
                 export_entry.config(state="normal")
                 exportsearch_button.config(state="normal")
                        
-                start_button.config(command=lambda: eva.test(x='Normal Usage'))
+                start_button.config(command=lambda: main_loop())
                 
 
             
@@ -265,7 +277,7 @@ def main_window():
     apply_button= ttk.Button(root, text='Apply changes', command=get_values)
     apply_button.grid(row=5, column=0, padx=10, pady=10, sticky='w')
 
-    test_button = ttk.Button(root, text='Test', command=lambda: eva.process(train=False, testrun=True))
+    test_button = ttk.Button(root, text='Test', command=lambda: main_loop(True))
     test_button.grid(row=5, column=0, padx=100, pady=5, sticky='w')
 
     console_label = ttk.Label(root, text='Kernel Output')
@@ -275,9 +287,12 @@ def main_window():
     console_output.grid(row=7, column=0, padx=10, pady=5, sticky='w')
     sys.stdout = ConsoleRedirector(console_output)
     
-    start_button=ttk.Button(root, text='Start', command=lambda: eva.process(train=False))
+    start_button=ttk.Button(root, text='Start', command=lambda: main_loop())
     start_button.grid(row=8, column=0, padx=10, pady=5, sticky='w')
-      
+    abort_button = ttk.Button(root, text='Abort', command=lambda: stop_event.set())
+    abort_button.grid(row=8, column=0, padx=100, pady=5, sticky='w')
+
+
     root.mainloop()
 
 main_window()

@@ -19,6 +19,8 @@ import matplotlib as mpl
 import pandas as pd
 import eva_toolkit as kit
 import eva_classes as evaclass
+import threading
+import time
 
 import configparser
 
@@ -41,7 +43,7 @@ mpl.rcParams.update({
 #%% classes
 
 
-def preprocessing(signal_directory, TN, chunk_length = 1, training = True, plot=True):
+def preprocessing(signal_directory, TN, training = True, plot=True):
     '''
     A preprocessing returns the SQI as objects for each device.
 
@@ -60,7 +62,7 @@ def preprocessing(signal_directory, TN, chunk_length = 1, training = True, plot=
 
     '''
     # Datei einlesen
-    config.read('config.ini')
+    config.read('') #path to config file
 
     signal_length = int(config['Settings']['signal_length'])
     fs_A = int(config['Settings']['fs_A'])
@@ -116,12 +118,11 @@ def preprocessing(signal_directory, TN, chunk_length = 1, training = True, plot=
         plt.show()
            
     return somno_SQI
-
-#%%    
+ 
 #%% pipeline
 
 
-def process(train=False,  plot=False, testrun = False):
+def process(stop_event, train=False,  plot=False, testrun = False, ):
     '''
     
 
@@ -162,7 +163,7 @@ def process(train=False,  plot=False, testrun = False):
         
         '''
         
-        config.read('config.ini')
+        config.read(r'')#path to configfile
 
         training_values_path = config['Paths']['training_values_path']
         classifier_path = config['Paths']['classifier_path']
@@ -190,7 +191,7 @@ def process(train=False,  plot=False, testrun = False):
             master_hists[subset] = (obj_training.hist, obj_training.xedges, obj_training.yedges)
 
         #calc thresholds for every subset
-        master_thresholds = kit.train_hist(validation_sets, master_hists, plot=False)
+        master_thresholds = kit.train_hist(validation_sets, master_hists, plot=True)
         #mean hists            
         mean_hist, xedges, yedges, best_thresh = kit.mean_hists(master_hists, master_thresholds)
         #performance test
@@ -215,12 +216,13 @@ def process(train=False,  plot=False, testrun = False):
         elif save == 'n':
             process(train=True)
              
-    config.read('config.ini')
+    config.read(r'')#path to config file
 
     working_folder = config['Paths']['working_folder']
     export_path = config['Paths']['export_path']   
     classifier_path = config['Paths']['classifier_path']
     chunk_length = config['Settings']['chunk_length']
+         
     def no_train():
 
         
@@ -262,33 +264,45 @@ def process(train=False,  plot=False, testrun = False):
         
         #the actual processing
         for name in TN_list:
+            if stop_event.is_set():
+                print('Abgebrochen')
+                return final_result
             print('Processing', name)
 
-            SQI_objekt = preprocessing(working_folder, name, chunk_length=chunk_length, plot=False, training=False)
-
-            #scoring
-            scores = kit.classify_data(scoring_hist, SQI_objekt.skewness, SQI_objekt.kurt, xedges, yedges)
-            #predicting            
-            y_pred = (scores >= thresh).astype(int)
-            #wrapping
-            good_chunks, bad_chunks, sum_ = kit.wrapping_results(y_pred)
+            try:
+                SQI_objekt = preprocessing(working_folder, name, plot=False, training=False)
+    
+                #scoring
+                scores = kit.classify_data(scoring_hist, SQI_objekt.skewness, SQI_objekt.kurt, xedges, yedges)
+                #predicting            
+                y_pred = (scores >= thresh).astype(int)
+                #wrapping
+                good_chunks, bad_chunks, sum_ = kit.wrapping_results(y_pred)
+                
+                final_result[name]={'good': good_chunks, 'bad': bad_chunks, 'sum': sum_, 'bad/sum': bad_chunks/sum_}
+                print(final_result[name])
+                if testrun:
+                    break
             
-            final_result[name]={'good': good_chunks, 'bad': bad_chunks, 'sum': sum_, 'bad/sum': bad_chunks/sum_}
-            print(final_result[name])
-            if testrun:
-                break
-        
+            except Exception as e:
+                print(f'{name} could not be processed: {e}')
+                continue  
+            
         return final_result
     
+
+    
     if train:
-        controll_fpr, controll_tpr = training()
-        return (controll_fpr, controll_tpr)
+        temp = training()
+        return temp
     else:
         global final_result
         final_result = no_train()
         df_final_result = pd.DataFrame.from_dict(final_result, orient='index')
         df_final_result.to_excel(export_path + 'results.xlsx')
         return final_result
+    
+
 
 
 

@@ -7,7 +7,7 @@ Created on Fri Feb 28 14:01:14 2025
 
 import os
 
-os.chdir(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool')#set working directory
+os.chdir(r'')#set working directory
 
 import tkinter as tk
 from tkinter import ttk, filedialog

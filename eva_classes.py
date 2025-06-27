@@ -15,7 +15,7 @@ import configparser
 
 config = configparser.ConfigParser()
 
-config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini')
+config.read(r'A:\project\directory\config.ini')
 fs_A = int(config['Settings']['fs_a'])
 low_BPM = 48
 high_BPM = 120 #workaround for deprecated funktion

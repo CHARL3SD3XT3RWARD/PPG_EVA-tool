@@ -60,7 +60,7 @@ def preprocessing(signal_directory, TN, training = True, plot=True):
 
     '''
     # Datei einlesen
-    config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini') #path to config file
+    config.read(r'A:\project\directory\config.ini') #path to config file
 
     fs_A = int(config['Settings']['fs_a'])
     chunk_length = float(config['Settings']['chunk_length'])
@@ -159,7 +159,7 @@ def process(stop_event, train=False,  plot=False, testrun = False, ):
         
         '''
         
-        config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini')#path to configfile
+        config.read(r'A:\project\directory\config.ini')#path to configfile
 
         training_values_path = config['Paths']['training_values_path']
         classifier_path = config['Paths']['classifier_path']
@@ -212,7 +212,7 @@ def process(stop_event, train=False,  plot=False, testrun = False, ):
         elif save == 'n':
             process(train=True)
              
-    config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini')#path to config file
+    config.read(r'A:\project\directory\config.ini')#path to config file
 
     working_folder = config['Paths']['working_folder']
     export_path = config['Paths']['export_path']   

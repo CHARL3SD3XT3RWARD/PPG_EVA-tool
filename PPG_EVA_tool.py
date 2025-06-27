@@ -19,8 +19,6 @@ import matplotlib as mpl
 import pandas as pd
 import eva_toolkit as kit
 import eva_classes as evaclass
-import threading
-import time
 
 import configparser
 
@@ -62,10 +60,9 @@ def preprocessing(signal_directory, TN, training = True, plot=True):
 
     '''
     # Datei einlesen
-    config.read('') #path to config file
+    config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini') #path to config file
 
-    signal_length = int(config['Settings']['signal_length'])
-    fs_A = int(config['Settings']['fs_A'])
+    fs_A = int(config['Settings']['fs_a'])
     chunk_length = float(config['Settings']['chunk_length'])
     lowcut = float(config['Settings']['lowcut'])
     highcut = float(config['Settings']['highcut'])
@@ -73,7 +70,6 @@ def preprocessing(signal_directory, TN, training = True, plot=True):
 
 
     #clac signallength. signal_length is in config
-    signal_length_A = signal_length*fs_A
     chunk_size=int(chunk_length*fs_A)     
 
     #importing corsanesignal
@@ -163,7 +159,7 @@ def process(stop_event, train=False,  plot=False, testrun = False, ):
         
         '''
         
-        config.read(r'')#path to configfile
+        config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini')#path to configfile
 
         training_values_path = config['Paths']['training_values_path']
         classifier_path = config['Paths']['classifier_path']
@@ -216,12 +212,11 @@ def process(stop_event, train=False,  plot=False, testrun = False, ):
         elif save == 'n':
             process(train=True)
              
-    config.read(r'')#path to config file
+    config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini')#path to config file
 
     working_folder = config['Paths']['working_folder']
     export_path = config['Paths']['export_path']   
     classifier_path = config['Paths']['classifier_path']
-    chunk_length = config['Settings']['chunk_length']
          
     def no_train():
 

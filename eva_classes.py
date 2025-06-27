@@ -15,10 +15,10 @@ import configparser
 
 config = configparser.ConfigParser()
 
-config.read('config.ini')
-fs_A = int(config['Settings']['fs_A'])
-low_BPM = int(config['Settings']['low_bpm'])
-high_BPM = int(config['Settings']['high_bpm'])
+config.read(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool\config.ini')
+fs_A = int(config['Settings']['fs_a'])
+low_BPM = 48
+high_BPM = 120 #workaround for deprecated funktion
 
 
 class Processing:
@@ -254,7 +254,7 @@ class SQI:
         Calculate the ZCR for every sequence.
 
         Returns
-        ------
+        -------
         self.signs: list
             A list with values for the signs of the signalvalues. 1 = positive; -1 = negative
         self.cross_pos: list

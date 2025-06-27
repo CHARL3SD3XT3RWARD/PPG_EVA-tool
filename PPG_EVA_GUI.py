@@ -5,6 +5,10 @@ Created on Fri Feb 28 14:01:14 2025
 @author: alko18
 """
 
+import os
+
+os.chdir(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool')#set working directory
+
 import tkinter as tk
 from tkinter import ttk, filedialog
 import sys
@@ -15,6 +19,7 @@ import PPG_EVA_tool as eva
 import configparser
 
 stop_event = threading.Event()
+
 
 def main_loop(testrun = False):
     stop_event.clear()
@@ -53,14 +58,10 @@ def set_values():
 
     config['Settings'] = {
         'fs_A': fs_A,
-        'fs_B': fs_B,
-        'signal_length': signal_length,
         'order': order,
         'lowcut': lowcut,
         'highcut': highcut,
         'chunk_length': chunk_length,
-        'low_BPM': low_BPM,
-        'high_BPM': high_BPM,
         
     }
 
@@ -131,26 +132,14 @@ def main_window():
         metadata_frame = ttk.Frame(root)
         metadata_frame.grid(row=3, column=0, columnspan=2,padx=10, pady=10, sticky='w')
         
-        label_fsA = ttk.Label(metadata_frame, text='fs A')
-        label_fsB = ttk.Label(metadata_frame, text='fs B')
+        label_fsA = ttk.Label(metadata_frame, text='Samplerate')
         fsA_unit=ttk.Label(metadata_frame, text='Hz')
-        fsB_unit=ttk.Label(metadata_frame, text='Hz')
-        cutting_label = ttk.Label(metadata_frame, text='Target Signallength')
-        cutting_unit=ttk.Label(metadata_frame, text='min')
         fsA_entry = ttk.Entry(metadata_frame, width=10, textvariable=fs_A_val)
-        fsB_entry = ttk.Entry(metadata_frame, width=10, textvariable=fs_B_val)
-        cutting_entry=ttk.Entry(metadata_frame, width=10, textvariable=signal_length_val)
         
         label_fsA.grid(row=0, column=0, padx=5, pady=2, sticky='w')
         fsA_entry.grid(row=0, column=1, pady=2, sticky='w')
-        label_fsB.grid(row=1, column=0, padx=5, pady=2, sticky='w')
-        fsB_entry.grid(row=1, column=1, pady=2, sticky='w')
         fsA_unit.grid(row=0, column=2, sticky='w')
-        fsB_unit.grid(row=1, column=2, sticky='w')
-        cutting_unit.grid(row=2, column=2, sticky='w')
-        cutting_label.grid(row=2, padx=5, pady=2)
-        cutting_entry.grid(row=2, column=1, pady=2)
-
+    
     def advanced():
 
         def filter_():
@@ -189,26 +178,6 @@ def main_window():
             chunklenght_label.grid(row=0, column=0, padx=10, pady=5, sticky='w')
             chunklenght_entry.grid(row=0, column=1, pady=5,sticky='w')
             chunklength_unit.grid(row=0, column=2, pady=5,sticky='w')
-
-        def snr_():            
-             SNR_label = ttk.Label(advanced_frame, text='SNR') 
-             SNR_label.grid(row=1, column=2, padx=10, pady=5, sticky='w')
-        
-             lowBPM_label=ttk.Label(SNR_frame, text='Lowcut')
-             highBPM_label=ttk.Label(SNR_frame, text='Highcut')
-        
-             lowBPM_entry=ttk.Entry(SNR_frame, width=10, textvariable=low_BPM_val)
-             highBPM_entry=ttk.Entry(SNR_frame, width=10, textvariable=high_BPM_val)
-        
-             lowBPM_unit=ttk.Label(SNR_frame, text='BPM')
-             highBPM_unit=ttk.Label(SNR_frame, text='BPM')
-             
-             lowBPM_label.grid(row=0, column=0, padx=10, pady=5, sticky='w')
-             highBPM_label.grid(row=1, column=0, padx=10, pady=5, sticky='w')     
-             lowBPM_entry.grid(row=0, column=1, pady=5, sticky='w')
-             highBPM_entry.grid(row=1, column=1, pady=5, sticky='w')
-             lowBPM_unit.grid(row=0, column=2, pady=5, sticky='w')
-             highBPM_unit.grid(row=1, column=2, pady=5, sticky='w')     
              
         
         advanced_frame = ttk.Frame(root)
@@ -227,7 +196,6 @@ def main_window():
         
         filter_()
         slicing()
-        snr_()
         
     def get_values():
        
@@ -235,14 +203,10 @@ def main_window():
         working_folder = folderpath_val.get()
         exportpath = exportpath_val.get()
         fs_A = fs_A_val.get()
-        fs_B = fs_B_val.get()
-        signal_length = signal_length_val.get()
         order = order_val.get()
         lowcut = lowcut_val.get()
         highcut = highcut_val.get()
         chunk_length = chunk_length_val.get()
-        low_BPM = low_BPM_val.get()
-        high_BPM = high_BPM_val.get()
         print('Changes applied.')
         
         set_values()
@@ -256,17 +220,12 @@ def main_window():
     exportpath_val = tk.StringVar()
     #meta data:
     fs_A_val = tk.IntVar(value=128)
-    fs_B_val = tk.IntVar(value=32)
-    signal_length_val=tk.IntVar(value=15)
     #filter
     order_val=tk.IntVar(value=2)
     lowcut_val=tk.DoubleVar(value=0.5)
     highcut_val=tk.DoubleVar(value=8.0)
     #slicing
     chunk_length_val=tk.DoubleVar(value=10)
-    #SNR
-    low_BPM_val=tk.IntVar(value=48)
-    high_BPM_val=tk.IntVar(value=120)
     
     directory()
     

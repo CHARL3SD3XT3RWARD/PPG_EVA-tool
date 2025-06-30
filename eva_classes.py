@@ -14,12 +14,10 @@ import eva_toolkit as kit
 import configparser
 
 config = configparser.ConfigParser()
+config_path = r''
 
-<<<<<<< HEAD
-config.read(r'') # path to config.ini
-=======
-config.read(r'A:\project\directory\config.ini')
->>>>>>> 1d7179f267144ac593d3b462c43025e7c41b236e
+config.read(config_path) # path to config.ini
+
 fs_A = int(config['Settings']['fs_a'])
 low_BPM = 48
 high_BPM = 120 #workaround for deprecated funktion

@@ -7,7 +7,7 @@ Created on Fri Feb 28 14:01:14 2025
 
 import os
 
-os.chdir(r'C:\Users\akorn\Desktop\Charié\BA\final_version\PPG_EVA-tool')#set working directory
+os.chdir(r'')#set working directory
 
 import tkinter as tk
 from tkinter import ttk, filedialog
@@ -19,7 +19,7 @@ import PPG_EVA_tool as eva
 import configparser
 
 stop_event = threading.Event()
-
+config_path = r'' #path to cinfig.ini
 
 def main_loop(testrun = False):
     stop_event.clear()
@@ -53,7 +53,8 @@ def set_values():
         'working_folder': working_folder ,
         'export_path': exportpath,
         'classifier_path': r'', #classifier
-        'training_values_path': r'' #all_data_tupöes
+        'training_values_path': r'',#all_data_tupöes
+
     }
 
     config['Settings'] = {
@@ -65,7 +66,7 @@ def set_values():
         
     }
 
-    with open(r'', 'w') as configfile: #path to configfile
+    with open(config_path, 'w') as configfile: #path to configfile
         config.write(configfile)
 
 def main_window(): 

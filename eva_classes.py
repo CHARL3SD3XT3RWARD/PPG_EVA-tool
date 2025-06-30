@@ -15,7 +15,11 @@ import configparser
 
 config = configparser.ConfigParser()
 
+<<<<<<< HEAD
 config.read(r'') # path to config.ini
+=======
+config.read(r'A:\project\directory\config.ini')
+>>>>>>> 1d7179f267144ac593d3b462c43025e7c41b236e
 fs_A = int(config['Settings']['fs_a'])
 low_BPM = 48
 high_BPM = 120 #workaround for deprecated funktion

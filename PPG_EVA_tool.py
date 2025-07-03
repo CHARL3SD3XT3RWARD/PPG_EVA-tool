@@ -159,6 +159,10 @@ def process(stop_event, train=False, testrun = False, ):
         There will be a prompt in the kernel asking wether to save [s] the classifier, start over [n] or quit [q].
 
         '''
+<<<<<<< HEAD
+=======
+        
+>>>>>>> d479f2cdcb398b3eacaa157d91ce9075a2f1abe0
         config.read(config_path)#path to configfile
 
         training_values_path = config['Paths']['training_values_path']

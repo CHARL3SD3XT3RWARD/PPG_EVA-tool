@@ -1,1 +1,1 @@
-To get the docs, download the docs-folder and navigate to docs\bild\html\index
+Link to the docs: https://charl3sd3xt3rward.github.io/PPG_EVA-tool/

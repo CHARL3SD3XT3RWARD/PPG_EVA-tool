@@ -7,7 +7,7 @@ Created on Fri Feb 28 14:01:14 2025
 
 import os
 
-os.chdir(r'')#set working directory
+# os.chdir(r'')#set working directory
 
 import tkinter as tk
 from tkinter import ttk, filedialog
@@ -22,6 +22,17 @@ stop_event = threading.Event()
 config_path = r'' #path to cinfig.ini
 
 def main_loop(testrun = False):
+    '''
+    Starts the PPG_EVA_tool.process()-function in evaluation mode.
+
+    Parameters
+    ----------
+    testrun : bool, optional
+        If True, PPG-EVA takes the first signal in the given directory and process it.
+        Else, PPG-Eva will process the whole batch in the given directory.
+        The default is False.
+
+    '''
     stop_event.clear()
     if testrun:
         eva.process(stop_event, train=False, testrun=True)    
@@ -31,22 +42,41 @@ def main_loop(testrun = False):
 
 
 class ConsoleRedirector:
-    """Fängt print()-Ausgaben ab und leitet sie an ein Text-Widget weiter"""
+
     def __init__(self, text_widget):
         self.text_widget = text_widget
 
     def write(self, message):
-        """Schreibt den Text ins Textfeld"""
+
         self.text_widget.insert(tk.END, message)
         self.text_widget.see(tk.END)
         self.text_widget.update_idletasks()# Automatisches Scrollen
 
     def flush(self):
-        """Wird für Kompatibilität benötigt (z.B. bei `sys.stdout.flush()`)"""
         pass
 
 def set_values():
+    r'''
+    This function will generate a config.ini file. This file contains all the data like paths and metadata like the filtersettings.
+    Examplefile::
+        config['Paths'] = {\n
+            'working_folder': A:\my\working\directory ,
+            'export_path': A:\my\result\directory,
+            'classifier_path': A:\PPG_EVA\classifier.pcl, #classifier
+            'training_values_path': A:\PPG_EVA\all_data_tuples.xlsx, #all_data_tuples
+
+        }
+
+        config['Settings'] = {
+            'fs_A': 128,
+            'order': 2,
+            'lowcut': 0.8,
+            'highcut': 2.0,
+            'chunk_length': 10,
+            
+        }
     
+    '''    
     config = configparser.ConfigParser()
 
     config['Paths'] = {

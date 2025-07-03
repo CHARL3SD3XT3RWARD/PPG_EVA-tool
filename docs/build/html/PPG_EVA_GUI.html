@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="PPG_EVA_tool module" href="PPG_EVA_tool.html" />
-    <link rel="prev" title="Welcome to PPG_Eva-tool’s documentation!" href="index.html" /> 
+    <link rel="prev" title="PPG_EVA-tool" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,6 +44,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PPG_EVA-tool</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PPG_EVA_GUI module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#PPG_EVA_GUI.ConsoleRedirector"><code class="docutils literal notranslate"><span class="pre">ConsoleRedirector</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#PPG_EVA_GUI.ConsoleRedirector.flush"><code class="docutils literal notranslate"><span class="pre">ConsoleRedirector.flush()</span></code></a></li>
@@ -75,6 +76,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PPG_EVA-tool</a></li>
       <li class="breadcrumb-item active">PPG_EVA_GUI module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/PPG_EVA_GUI.rst.txt" rel="nofollow"> View page source</a>
@@ -93,25 +95,32 @@
 <dt class="sig sig-object py" id="PPG_EVA_GUI.ConsoleRedirector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PPG_EVA_GUI.</span></span><span class="sig-name descname"><span class="pre">ConsoleRedirector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_widget</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_GUI.ConsoleRedirector" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Fängt print()-Ausgaben ab und leitet sie an ein Text-Widget weiter</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="PPG_EVA_GUI.ConsoleRedirector.flush">
 <span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_GUI.ConsoleRedirector.flush" title="Link to this definition"></a></dt>
-<dd><p>Wird für Kompatibilität benötigt (z.B. bei <cite>sys.stdout.flush()</cite>)</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PPG_EVA_GUI.ConsoleRedirector.write">
 <span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_GUI.ConsoleRedirector.write" title="Link to this definition"></a></dt>
-<dd><p>Schreibt den Text ins Textfeld</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="PPG_EVA_GUI.main_loop">
 <span class="sig-prename descclassname"><span class="pre">PPG_EVA_GUI.</span></span><span class="sig-name descname"><span class="pre">main_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">testrun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_GUI.main_loop" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Starts the PPG_EVA_tool.process()-function in evaluation mode.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>testrun<span class="classifier">bool, optional</span></dt><dd><p>If True, PPG-EVA takes the first signal in the given directory and process it.
+Else, PPG-Eva will process the whole batch in the given directory.
+The default is False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="PPG_EVA_GUI.main_window">
@@ -121,7 +130,27 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="PPG_EVA_GUI.set_values">
 <span class="sig-prename descclassname"><span class="pre">PPG_EVA_GUI.</span></span><span class="sig-name descname"><span class="pre">set_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_GUI.set_values" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>This function will generate a config.ini file. This file contains all the data like paths and metadata like the filtersettings.
+Examplefile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Paths&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>\<span class="n">n</span>
+    <span class="s1">&#39;working_folder&#39;</span><span class="p">:</span> <span class="n">A</span><span class="p">:</span>\<span class="n">my</span>\<span class="n">working</span>\<span class="n">directory</span> <span class="p">,</span>
+    <span class="s1">&#39;export_path&#39;</span><span class="p">:</span> <span class="n">A</span><span class="p">:</span>\<span class="n">my</span>\<span class="n">result</span>\<span class="n">directory</span><span class="p">,</span>
+    <span class="s1">&#39;classifier_path&#39;</span><span class="p">:</span> <span class="n">A</span><span class="p">:</span>\<span class="n">PPG_EVA</span>\<span class="n">classifier</span><span class="o">.</span><span class="n">pcl</span><span class="p">,</span> <span class="c1">#classifier</span>
+    <span class="s1">&#39;training_values_path&#39;</span><span class="p">:</span> <span class="n">A</span><span class="p">:</span>\<span class="n">PPG_EVA</span>\<span class="n">all_data_tuples</span><span class="o">.</span><span class="n">xlsx</span><span class="p">,</span> <span class="c1">#all_data_tuples</span>
+
+<span class="p">}</span>
+
+<span class="n">config</span><span class="p">[</span><span class="s1">&#39;Settings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fs_A&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;lowcut&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s1">&#39;highcut&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="s1">&#39;chunk_length&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </section>
 
@@ -129,7 +158,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PPG_Eva-tool’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="PPG_EVA-tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="PPG_EVA_tool.html" class="btn btn-neutral float-right" title="PPG_EVA_tool module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

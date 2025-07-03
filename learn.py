@@ -5,6 +5,7 @@ def roc_curve(y_true, y_score):
     Computes the ROC-values for given scores. It takes two arrays.
     One with the ground truth in binary an one with the scores.
     Both arrays must be of the same length, otherwise an error occurs.
+    
     Example::
         # generating dummy ground truth
         a1 = np.zeros(10, dtype=int)
@@ -19,8 +20,7 @@ def roc_curve(y_true, y_score):
         print('FPR:', fpr_dummy)
         print('TPR:', tpr_dummy)
         print('thresholds:' thresh_dummy)
-        
-
+    
     Parameters
     ----------
     y_true : array
@@ -36,7 +36,7 @@ def roc_curve(y_true, y_score):
         The true positive rate for every threshold.
     thresholds : array
         The thresholds.
-
+    
     '''
     
     # converting input to numpyarray
@@ -133,21 +133,21 @@ def precision_recall_curve(y_true, probas_pred):
 
 def confusion_matrix(y_true, y_pred, labels=None):
     '''
-    
+    Creates a confusion matrix from the binary classification and ground truth.
     
     Parameters
     ----------
-    y_true : TYPE
-        DESCRIPTION.
-    y_pred : TYPE
-        DESCRIPTION.
-    labels : TYPE, optional
-        DESCRIPTION. The default is None.
+    y_true : array
+        The ground truth labels.
+    y_pred : array
+        The predicted labels.
+    labels : tupel, optional
+        The desired labels. The default is None.
 
     Returns
     -------
-    matrix : TYPE
-        DESCRIPTION.
+    matrix : ndarray
+        A 2x2 matrix containing the True Positive, True Negatife, False Positive and False Negative.
 
     '''
     if labels is None:

@@ -44,6 +44,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PPG_EVA-tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PPG_EVA_GUI.html">PPG_EVA_GUI module</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PPG_EVA_tool module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#PPG_EVA_tool.preprocessing"><code class="docutils literal notranslate"><span class="pre">preprocessing()</span></code></a></li>
@@ -69,6 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PPG_EVA-tool</a></li>
       <li class="breadcrumb-item active">PPG_EVA_tool module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/PPG_EVA_tool.rst.txt" rel="nofollow"> View page source</a>
@@ -85,20 +87,16 @@
 <p>&#64;author: alko18</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="PPG_EVA_tool.preprocessing">
-<span class="sig-prename descclassname"><span class="pre">PPG_EVA_tool.</span></span><span class="sig-name descname"><span class="pre">preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_tool.preprocessing" title="Link to this definition"></a></dt>
-<dd><p>A preprocessing returns the SQI as objects for each device.</p>
+<span class="sig-prename descclassname"><span class="pre">PPG_EVA_tool.</span></span><span class="sig-name descname"><span class="pre">preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_tool.preprocessing" title="Link to this definition"></a></dt>
+<dd><p>The preprocessing pipeline. Starting with the signalimport. It continues with the filtering and slicing into chunks. Returns a object containing all SQIs.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>training_signal_path<span class="classifier">string</span></dt><dd><p>The baspath to signaldirectory.</p>
+<dt>signal_directory<span class="classifier">string</span></dt><dd><p>The baspath to signaldirectory. In that directory, only signals in .txt-format are allowed.</p>
 </dd>
-<dt>TN<span class="classifier">string</span></dt><dd><p>The TN-ID to find the signals within the training_signal_path.</p>
+<dt>TN<span class="classifier">string</span></dt><dd><p>The TN-ID to find the signals within the signal_directory. The IDs are provided by the os.listdir()-funktion. Therefore The ID is synonymous for the filename.</p>
 </dd>
-<dt>chunk_length<span class="classifier">float, optional</span></dt><dd><p>The chunklength in seconds.</p>
-</dd>
-<dt>training<span class="classifier">bool, optional</span></dt><dd><p>Wether PPG-Eva is in training mode or not. If False, corsano will only used for synchronicing. Was used for the aqusition of the training_data. The default is True.</p>
-</dd>
-<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>If True, the whole signal will be plotted. The default is True.</p>
+<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>If True, the continous signal will be plotted. The chunks will be seperated by dashed lines. The default is True.</p>
 </dd>
 </dl>
 </section>
@@ -106,36 +104,37 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="PPG_EVA_tool.process">
-<span class="sig-prename descclassname"><span class="pre">PPG_EVA_tool.</span></span><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testrun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_tool.process" title="Link to this definition"></a></dt>
-<dd><section id="id1">
+<span class="sig-prename descclassname"><span class="pre">PPG_EVA_tool.</span></span><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testrun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PPG_EVA_tool.process" title="Link to this definition"></a></dt>
+<dd><p>The main funktion. Here it is decided wether PPG-Eva is in trainingmode or not.</p>
+<section id="id1">
 <h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<dl class="simple">
-<dt>TN_list<span class="classifier">list</span></dt><dd><p>A list of the names.</p>
+<dl>
+<dt>stop_event: objekt</dt><dd><p>Provides a stop event so PPG-Eva can be aborted while running. For convenience purpose.</p>
 </dd>
-<dt>train<span class="classifier">bool, optional</span></dt><dd><p>If True, PPG-Eva is in training mode. Otherwise it is in Evaluation mode. The default is False.</p>
-</dd>
-<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>Deprecated. The default is False.</p>
-</dd>
-</dl>
-</section>
-<section id="returns">
-<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h2>
-<dl class="simple">
-<dt>in Train-mode:</dt><dd><dl class="simple">
-<dt>Nothing. The results of the classifier are shown. The operator is prompted to enter:</dt><dd><p>y : classifier will be saved and PPG-Eva terminates.
-n : training will be performed again with a new randomization of the sets.
-q : Quit. PPG.Eva terminates.</p>
-</dd>
-</dl>
-</dd>
-<dt>in Evaluation-mode:</dt><dd><dl class="simple">
-<dt>final_results_somno: dict</dt><dd><p>A dictionairy where the names are the keys. Behind every key is a dictionairy containing the results from 
-wrapping_results()
-‘good’: number og good sequences
-‘bad’ : number of bad sequences
-‘sum’ : nuber of sequences</p>
+<dt>train<span class="classifier">bool, optional</span></dt><dd><p>If False, PPG-Eva is in Evaluationmode.
+It starts with importing all filenames from the given directory and the classifier. 
+Then it iterates over all elements in TN_list. The preprocessing is provided by PPG_EVA_tool.preprocessing().
+After that, it creates a binary scoring and wraps the data into a dictionairy.</p>
+<dl>
+<dt>final_result<span class="classifier">dict</span></dt><dd><p>The Evaluation of each signal. It gives the number of good chunks, bad chunks, the number of all chunks, and the proportion of the number of bad chunks to all chunks.
+Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">final_result</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                      <span class="s1">&#39;good&#39;</span><span class="p">:</span> <span class="n">good_chunks</span><span class="p">,</span> 
+                      <span class="s1">&#39;bad&#39;</span><span class="p">:</span> <span class="n">bad_chunks</span><span class="p">,</span> 
+                      <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="n">sum_</span><span class="p">,</span> 
+                      <span class="s1">&#39;bad/sum&#39;</span><span class="p">:</span> <span class="n">bad_chunks</span><span class="o">/</span><span class="n">sum_</span>
+                      <span class="p">}</span>
+</pre></div>
+</div>
 </dd>
 </dl>
+<p>Otherwise it is in trainingmode. It needs a datafile and a annotationfile. The filepath to these two are set while installation.
+For more info, got to the PPG_EVA_GUI.set_values() docs. While processing, the ROC-curves of the 5 subsets will be plottet.
+Further the performance of the classifier on the five subsets and on the testset will be shown in ROC-space. 
+There will be a prompt in the kernel asking wether to save [s] the classifier, start over [n] or quit [q].
+The default is False.</p>
+</dd>
+<dt>testrun<span class="classifier">bool, optional</span></dt><dd><p>For evaluationmode only. It takes the first signal from the directory and process it to check for errors. The default is False.</p>
 </dd>
 </dl>
 </section>

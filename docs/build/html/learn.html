@@ -43,6 +43,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PPG_EVA-tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PPG_EVA_GUI.html">PPG_EVA_GUI module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PPG_EVA_tool.html">PPG_EVA_tool module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eva_classes.html">eva_classes module</a></li>
@@ -70,6 +71,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PPG_EVA-tool</a></li>
       <li class="breadcrumb-item active">learn module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/learn.rst.txt" rel="nofollow"> View page source</a>
@@ -107,21 +109,22 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="learn.confusion_matrix">
 <span class="sig-prename descclassname"><span class="pre">learn.</span></span><span class="sig-name descname"><span class="pre">confusion_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#learn.confusion_matrix" title="Link to this definition"></a></dt>
-<dd><section id="id1">
+<dd><p>Creates a confusion matrix from the binary classification and ground truth.</p>
+<section id="id1">
 <h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>y_true<span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+<dt>y_true<span class="classifier">array</span></dt><dd><p>The ground truth labels.</p>
 </dd>
-<dt>y_pred<span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+<dt>y_pred<span class="classifier">array</span></dt><dd><p>The predicted labels.</p>
 </dd>
-<dt>labels<span class="classifier">TYPE, optional</span></dt><dd><p>DESCRIPTION. The default is None.</p>
+<dt>labels<span class="classifier">tupel, optional</span></dt><dd><p>The desired labels. The default is None.</p>
 </dd>
 </dl>
 </section>
 <section id="id2">
 <h2>Returns<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>matrix<span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+<dt>matrix<span class="classifier">ndarray</span></dt><dd><p>A 2x2 matrix containing the True Positive, True Negatife, False Positive and False Negative.</p>
 </dd>
 </dl>
 </section>

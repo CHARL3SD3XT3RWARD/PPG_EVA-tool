@@ -15,11 +15,8 @@ import configparser
 
 config = configparser.ConfigParser()
 
-<<<<<<< HEAD
 config.read(r'') # path to config.ini
-=======
-config.read(r'A:\project\directory\config.ini')
->>>>>>> 1d7179f267144ac593d3b462c43025e7c41b236e
+
 fs_A = int(config['Settings']['fs_a'])
 low_BPM = 48
 high_BPM = 120 #workaround for deprecated funktion
@@ -27,11 +24,10 @@ high_BPM = 120 #workaround for deprecated funktion
 
 class Processing:
     '''
-    The class for processing the Signals. Included are:
-        __init__
-        pleth_filter
-        resampling
-        slice_list
+    The class for processing the Signals. It takes the signal as an array and the timestamps as a pandas.Series objekt. Included are:\n
+        pleth_filter\n
+        resampling\n
+        slice_list\n
     
     '''
     def __init__(self, signals, timestamps):
@@ -55,25 +51,23 @@ class Processing:
         
     def pleth_filter(self, fs, lowcut, highcut, order, resampled=False):
         '''
-        Butterwoth IIR filter second order.
+        Butterwoth IIR filter. It takes the signal and filters it in a second order section mannor. 
+        If the signal was resampled with Processing.resampled, resampled must be set True.
+        The filtered signal is stored in self.filtered_signal.
 
         Parameters
         ----------
-        fs : Int
-            Sampling rate in Hertz. The default is 128 Hz.
+        fs_A : Int
+            Sampling rate in Hertz. The samplingrate is provided with the config.ini. For more information on that go to PPG_EVA_GUI.set_values().
         lowcut : float, optional
-            The default is 0.5.
+            The lower bound of the Filter. It is provided with the config.ini.
         highcut : float, optional
-            The default is 8.
+            The higher bound of the Filter. It is provided with the config.ini.
         order : Int, optional
-            The default is a Bandpass of 2nd order.
+            The order of the Filter. It is provided with the config.ini. Keep in mind that due to forward-backwards filtering the effektive order doubles.
         resampled : Bool, optional
-            Wether the Signal is resampled. the resampled signal is a different attribute of this object.
+            Wether the Signal is resampled or not. the resampled signal is a different attribute of this object.
             The default is False.
-
-        Returns
-        -------
-        None.
 
         '''
         
@@ -91,13 +85,16 @@ class Processing:
     
     def resampling(self,  sampling_rate, target_rate=fs_A, interpolate_pchip=False):
         '''
-
+        A function to resample a signal. It can be resampled with the C2-spline-interpolation method or the pchip method.
+        This funktion is essentially deprecated but can still be used by modifying the PPG_EVA_tool.preprocessing funktion.
+        The resampled signal and timestamps is stored in the self.resample_signal and self.new_timestamps atributes respectivley.
+        
         Parameters
         ----------
-        sampling_rate : Int, optional
-            The original smaplingrate of the signal. The default is 32.
+        sampling_rate : Int
+            The original smaplingrate of the signal.
         target_rate: Int
-            The target samplinrate of the signal, The dafault is 128.
+            The target samplingrate of the signal. This parameter is provided by the config.ini as fs_A.
         interpolate_pchip: bool
             if True, the resampling is performed by the pchip-method. 
             The default is False and hence C2-Splineinterpolation is used.
@@ -128,16 +125,13 @@ class Processing:
         
     def slice_list(self, chunk_size):
         '''
-        Sequencing of the signal into desired length.
+        Sequencing of the signal into desired length. Before storing the signalchunks it is checked that all chunks are of the same length.
+        The chunks are stored in the self.signal_chunks atribute as a 2D-array.
 
         Parameters
         ----------
         chunk_size : Int, optional
             The desired length of sequence.
-
-        Returns
-        -------
-        None.
 
         '''
         self.filtered_signal = self.filtered_signal[512:]#cut away the settlement time of the filter
@@ -152,18 +146,17 @@ class Processing:
                     
 class SQI:
     '''
-    The class to calculate all SQIs. Includes:
-        __init__
-        shanon_entropy
-        calc_SNR
-        ZCR
-        skewness
-        kurt
 
-        
+    The class to calculate all SQIs. To initialize it takes only a 2D-array of the signalchunks. Includes:´\n
+    shanon_entropy\n
+    calc_SNR\n
+    ZCR\n
+    skewness\n
+    kurt\n
+    
     '''
     
-    def __init__(self, signal_chunks, criterion_snr=0, criterion_entropy=0, criterion_zcr=0):
+    def __init__(self, signal_chunks):
         '''
         
 
@@ -180,17 +173,14 @@ class SQI:
         
     def shanon_entropy(self, num_bins=16):
         '''
-        Calculates the entropy for every sequence.
+        Calculates the normalised entropy for every sequence.
+        The entropy for every chunk is stored in  a array in the self.entropy_values atribute.
 
         Parameters
         ----------
         num_bins : Int, optional
-            The number of bins used. The default is 16.
-
-        Returns
-        -------
-        self.entropy_values: list
-            the entropy values for every sequence.
+            The number of bins used to create the histogram and therefore the probability density function.
+            The default is 16.
 
         '''
         entropy_values=[]
@@ -206,14 +196,16 @@ class SQI:
     def calc_SNR(self, lowcut=low_BPM/60, highcut=high_BPM/60):
         '''
         Calculates the Signal- to Noise-Ratio.
-        Defined as the relative power of a signalband to the rest.
+        Defined as the relative power of a signalband to the rest. 
+        To determine the signalpower, the FFT of the given chunk is integrated within the lowcut and highcut as lower and upper limits respectivley.
+        The noisepower is the integrates value of the FFT outside these boundaries.
 
         Parameters
         ----------
         lowcut : float, optional
-            Lower bound of the frequency band. The default is .8 (48 bpm).
+            Lower bound of the frequency band. This parameter is provided by the config.ini as bpm.
         highcut : float, optional
-            higher bound of the frequency band. The default is 2.0 (120 bpm).
+            higher bound of the frequency band. This parameter is provided by the config.ini as bpm.
 
         Returns
         -------
@@ -255,20 +247,23 @@ class SQI:
             
     def ZCR(self):
         '''
-        Calculate the ZCR for every sequence.
+        Calculate the ZCR for every sequence. The ZCR is here defined as the variance to a lin. Regression of the time of occurance of every signchange.
+        The lin. Regression is performed with the eva_toolkit.lin_reg() function and the variance is calculated by the eva_toolkit.variance() function.
 
         Returns
         -------
         self.signs: list
-            A list with values for the signs of the signalvalues. 1 = positive; -1 = negative
+            A list with values for the signs of the signalvalues.\n
+            1 = positive\n
+            -1 = negative
         self.cross_pos: list
-            A list if the indices where a zero crossing occured.
+            A list of the indices where a zero crossing occured.
         self.n_cross: Int
             The number of zero crossings.
         self.slope: float
             the slope of the lin. regression for every sequence.
         self.intersect: float
-            the the y-intersect of the lin. regression for every sequence.
+            the y-intersect of the lin. regression for every sequence.
         self.variance:
             the variance for every sequence.
             
@@ -333,10 +328,10 @@ class SQI:
         
 class Training:
     '''
-    The class for Training. Includes:
-        __init__
-        separate_values
-        building hists
+    The class for Training. It takes the skewness, and kurtosis as separate arrays and the anotation as a list or array as a binary classification.\n
+    Includes:\n
+        separate_values\n
+        building hists\n
     
     '''
     def __init__(self, skew_values, kurt_values, data):
@@ -362,7 +357,18 @@ class Training:
     def separate_values(self):
         '''
         Separating the values in good and bad data according to the annotation.
-
+        
+        Returns
+        -------
+        self.positive_skew: array
+            All skewness values that are labeled as good.
+        self.positive_kurt: array
+            All kurtosis values that are labeled as good.
+        self.negative_skew: array
+            All skewness values that are labeled as bad.
+        self.negative_kurt: array
+            All kurtosis values that are labeled as bad.
+        
         '''
         
         if len(self.data)-len(self.skew_values) == 0: #check for equal length -> human error
@@ -382,21 +388,22 @@ class Training:
             
     def building_hists(self, plot=False):
         '''
-        
+        Builds a 2D probability densitifunction where the skewness and the kurtosis the two dimensions resemble.
+        The resulting PDF is a logarithmic difference of the PDFs of the good data and the bad data.        
 
         Parameters
         ----------
         plot : bool, optional
-            If True, all histogrammst will be plotted. The default is False.
+            If True, all PDFs will be plotted. The default is False.
 
         Returns
         -------
         self.hist: aray
-            The histogrammvalues.
+            The PDF-values.
         self.xedges: array
-            The xedges if the bins.
+            The xedges of the bins.
         self.yedges: array            
-            The yedges if the bins.
+            The yedges of the bins.
 
         '''
             

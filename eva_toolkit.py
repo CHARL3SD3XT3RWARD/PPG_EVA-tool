@@ -5,16 +5,16 @@ import scipy as sc
 from collections import defaultdict
 
 import learn
-from sklearn.metrics import precision_recall_curve, confusion_matrix
+# from sklearn.metrics import precision_recall_curve, confusion_matrix
 # from sklearn.metrics import roc_curve, auc
 
 def lin_reg(signal_chunks, cross_pos):  
     """
-    A funktion wicht performs a lin. regression for every given signalchunk.
+    A function wicht performs a lin. regression for every given signalchunk.
     
     Parameters
     ----------
-    signal_chunks : array
+    signal_chunks : 2D-array
         The sequenced signal.
     cross_pos : 2D-list
         The Position of each zero crossing for every signal_chunks
@@ -45,7 +45,7 @@ def lin_reg(signal_chunks, cross_pos):
 
 def variance(slopes, intersect, cross_pos):
     '''
-    A function wich calculates the variance of the data relative to the lin. regression.
+    A function wich calculates the variance of the zero crossings relative to the lin. regression from the eva_toolkit.lin_reg() function.
     
     Parameters
     ----------
@@ -55,10 +55,12 @@ def variance(slopes, intersect, cross_pos):
         The y-intersect for ever lin. regression.
     cross_pos : list
         The position of every zero crossing as an array for every signalchunk.
+    
     Returns
     -------
     var : list
-        The normalised variance of the data relative to the lin. regression
+        The variance of the data relative to the lin. regression
+        
     '''
     var=[]
     for i in range(len(slopes)):
@@ -76,27 +78,22 @@ def variance(slopes, intersect, cross_pos):
 
 def import_training_data(training_values_path):# check in pipeline    
     '''
-    Imports a excel-sheet with all data of Somno.
+    Imports a excel-sheet with all data. This sheet must be created in beforehand.
     Futhermore, a rondomization and subdivison into test- and trainingsets is performed.   
     
     Parameters
     ----------
     training_values_path : string
-        The specific path of the excel-sheet.
-        
-    Example:r'A:\my\training\data\training_data.xlsx'
-    
+        The specific path of the excel-sheet. The path is provided in the config.ini. For more information go to the PPG_EVA_GUI.set_values() function.
+       
     Returns
     -------
     validation_sets: dict
-        Five subsets with a raugh equal amount of good and bad data.    
-    
+        Five subsets with a raugh equal amount of good and bad data.       
     training_sets: dict
         Five subsets wich contain four validation_sets. In every training_set one validation_set is missing.
-        
     test_set: array
         One set wich contains 20% of the whole dataset with respect to the subdivision in good and bad data.        
-        
     
     '''
     
@@ -161,21 +158,27 @@ def import_training_data(training_values_path):# check in pipeline
 
 def read_signal(mod_path, signal_key, time_key, sep=',', skiprows=0, date_format= None, header='infer'): 
     '''
+    Reads the signal stored in the given path.
     
-
     Parameters
     ----------
     mod_path : string
-        The modified filepath to the signalfile wit its name as last part. Syntax: path + 'filename'
+        The modified filepath to the signalfile wit its name as last part.\n
+        Syntax: path + 'filename'
     signal_key : string
-        The keyword/number for Pandas.Dataframe signal-column. Somno:   signal_key= 2, Corsano: signal_key='value'
+        The keyword/number for Pandas.Dataframe signal-column.\n
+        Somno:   signal_key= 2\n
+        Corsano: signal_key='value'
     time_key : string
-        Das Schlüsselwort für den Pandas.DataFrame um auf die Zeitstempel zuzugreifen. The keyword/number for Pandas.Dataframe timestamp-column. Somno:   time_key=0; Corsano: time_key='date'
+        The keyword/number for Pandas.Dataframe timestamp-column.\n
+        Somno:   time_key=0\n
+        Corsano: time_key='date'
     sep : string, optional
-        The seperator used to seperate the columns. Only necessary for Somno. Corsanofiles use the default. The default is ','. sep_somno = ';'
+        The seperator used to seperate the columns. Only necessary for Somno. Corsanofiles use the default. The default is ','.\n
+        sep_somno = ';'
     skiprows : integer, optional
         !!!Deprecated!!!
-        The number of rows that should be skipped. Only necessary for Somno (skip 6 rows). The default is 0.
+        The number of rows that should be skipped. The default is 0.
     date_format : string, optional
         Date-format for the timestamps. Only necessary for Somno ("%d.%m.%Y %H:%M:%S,%f"). The default is None.
         
@@ -197,12 +200,12 @@ def read_signal(mod_path, signal_key, time_key, sep=',', skiprows=0, date_format
       
 def classify_data(hist, data1, data2, xedges, yedges, annotation=None, plot=False):
     '''
-    Classify the input data.
+    Classifies the given data with the classifier. 
 
     Parameters
     ----------
     hist : array
-        The histogramvalues.
+        The PDF-values.
     data1 : array
         The skewness values of a signal.
     data2 : array
@@ -212,9 +215,9 @@ def classify_data(hist, data1, data2, xedges, yedges, annotation=None, plot=Fals
     yedges : array
         The yedges of the bins.
     annotation : array, optional
-        The annotation. It is only used to plot the data into the histogramm. The default is None.
+        The annotation. It is only used to plot the data into the PDF. The default is None.
     plot : bool, optional
-        If True, the histogram will be plotted with the annotated data. The default is False.
+        If True, the PDFs will be plotted with the annotated data. The default is False.
 
     Returns
     -------
@@ -278,14 +281,14 @@ def train_hist(validation_sets, hists, plot=False):
     validation_sets : dict
         A dictionaity containing the data of the subsets -> import_training_data().
     hists : dict
-        A dictionairy containing the histograms of every trainingset.
+        A dictionairy containing the PDFs of every trainingset.
     plot : bool, optional
         If True, all five ROC-Curves are plotted. The default is False.
 
     Returns
     -------
     master_thresholds : dict
-        A dictionairy containing the beste threshold for every subset.
+        A dictionairy containing the best threshold for every subset.
 
     '''
 
@@ -364,19 +367,19 @@ def train_hist(validation_sets, hists, plot=False):
       
 def mean_hists(hists, thresholds):
     '''
-    Calculates the mean from all histograms as final classifier.
+    Calculates the mean from all PDFs as final classifier.
 
     Parameters
     ----------
     hists : dict
-        All five histogramms fromm the trainingsets.
+        All five PDFs from the trainingsets.
     thresholds : dict
-        best threshold from every subset.
+        best threshold for every subset.
 
     Returns
     -------
     mean_hist : array
-        The mean histogram.        
+        The mean PDF.        
     xedges : array
         The xedges of the bins.
     yedges : array
@@ -406,20 +409,21 @@ def mean_hists(hists, thresholds):
     
 def test_subsets(validation_sets, mean_hist, xedges, yedges, best_thresh, plot=False):
     '''
+    This funktion applies the final classifier to the five subsets to check the consitency of the classifier. 
+    It should be selfexplainatory that the performances should have similar values, otherwise something went wron and a redo is recommended.
     
-
     Parameters
     ----------
     validation_sets : dict
         A dictionaity containing the data of the subsets -> import_training_data().
     mean_hist : array
-        The classifying histogram.
+        The classifying PDF.
     xedges : array
         The xedges of the bins.
     yedges : array
         The yedges of the bins.
     best_thresh : float
-        The mean threshold.
+        The threshold.
     plot : TYPE, optional
         If True, the performance of the calssifier on the subsets will be plotted in ROC-Space.
         The default is False.
@@ -495,24 +499,26 @@ def test_subsets(validation_sets, mean_hist, xedges, yedges, best_thresh, plot=F
 
     return (mean_fpr, mean_tpr, np.std(all_fpr), np.std(all_tpr))
 
-def test_testset(test_set, mean_hist, xedges, yedges, best_thresh, val_tupel, plot=False):
+def test_testset(test_set, mean_hist, xedges, yedges, best_thresh, val_tupel = (0,0,0,0), plot=False):
     '''
-    
+    This funktion applies the final classifier to the subsets e.g. unseen data.
+    This resembles the final performancetest.
 
     Parameters
     ----------
-    test_set : ndarray
+    test_set : dict
         A dictionaity containing the data of the testset -> import_training_data().
     mean_hist : array
-        The classifying histogram.
+        The classifying PDF.
     xedges : array
         The xedges of the bins.
     yedges : array
         The yedges of the bins.
     best_thresh : float
-        The mean threshold.
-    val_tupel : tuple
+        The threshold.
+    val_tupel : tuple, optional
         A tuple containing the, mean fpr, mean tpr, standard deviation of fpr, standard deviation of tpr, on the respective indices.
+        Only necessary if the Performance is plotted.
     plot : bool, optional
         If True, the performance ofe the classifier on the testset will be plottet in the ROC-space with the data of the subsets as errorbars. The default is False.
 

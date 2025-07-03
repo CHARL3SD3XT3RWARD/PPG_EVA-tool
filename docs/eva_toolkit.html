@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eva_toolkit module &mdash; PPG_Eva-tool  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="learn module" href="learn.html" />
+    <link rel="prev" title="eva_classes module" href="eva_classes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PPG_Eva-tool
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PPG_EVA-tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PPG_EVA_GUI.html">PPG_EVA_GUI module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PPG_EVA_tool.html">PPG_EVA_tool module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eva_classes.html">eva_classes module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">eva_toolkit module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.classify_data"><code class="docutils literal notranslate"><span class="pre">classify_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.import_training_data"><code class="docutils literal notranslate"><span class="pre">import_training_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.lin_reg"><code class="docutils literal notranslate"><span class="pre">lin_reg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.mean_hists"><code class="docutils literal notranslate"><span class="pre">mean_hists()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.read_signal"><code class="docutils literal notranslate"><span class="pre">read_signal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.test_subsets"><code class="docutils literal notranslate"><span class="pre">test_subsets()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.test_testset"><code class="docutils literal notranslate"><span class="pre">test_testset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.train_hist"><code class="docutils literal notranslate"><span class="pre">train_hist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.variance"><code class="docutils literal notranslate"><span class="pre">variance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eva_toolkit.wrapping_results"><code class="docutils literal notranslate"><span class="pre">wrapping_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">learn module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PPG_Eva-tool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PPG_EVA-tool</a></li>
+      <li class="breadcrumb-item active">eva_toolkit module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/eva_toolkit.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-eva_toolkit">
+<span id="eva-toolkit-module"></span><h1>eva_toolkit module<a class="headerlink" href="#module-eva_toolkit" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.classify_data">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">classify_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xedges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yedges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.classify_data" title="Link to this definition"></a></dt>
+<dd><p>Classifies the given data with the classifier.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>hist<span class="classifier">array</span></dt><dd><p>The PDF-values.</p>
+</dd>
+<dt>data1<span class="classifier">array</span></dt><dd><p>The skewness values of a signal.</p>
+</dd>
+<dt>data2<span class="classifier">array</span></dt><dd><p>The kurtosis values of a signal.</p>
+</dd>
+<dt>xedges<span class="classifier">array</span></dt><dd><p>The xedges of the bins.</p>
+</dd>
+<dt>yedges<span class="classifier">array</span></dt><dd><p>The yedges of the bins.</p>
+</dd>
+<dt>annotation<span class="classifier">array, optional</span></dt><dd><p>The annotation. It is only used to plot the data into the PDF. The default is None.</p>
+</dd>
+<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>If True, the PDFs will be plotted with the annotated data. The default is False.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>scores<span class="classifier">array</span></dt><dd><p>The likelihood of a value being good.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.import_training_data">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">import_training_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">training_values_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.import_training_data" title="Link to this definition"></a></dt>
+<dd><p>Imports a excel-sheet with all data. This sheet must be created in beforehand.
+Futhermore, a rondomization and subdivison into test- and trainingsets is performed.</p>
+<section id="id1">
+<h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>training_values_path<span class="classifier">string</span></dt><dd><p>The specific path of the excel-sheet. The path is provided in the config.ini. For more information go to the PPG_EVA_GUI.set_values() function.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h2>Returns<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>validation_sets: dict</dt><dd><p>Five subsets with a raugh equal amount of good and bad data.</p>
+</dd>
+<dt>training_sets: dict</dt><dd><p>Five subsets wich contain four validation_sets. In every training_set one validation_set is missing.</p>
+</dd>
+<dt>test_set: array</dt><dd><p>One set wich contains 20% of the whole dataset with respect to the subdivision in good and bad data.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.lin_reg">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">lin_reg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_chunks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cross_pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.lin_reg" title="Link to this definition"></a></dt>
+<dd><p>A function wicht performs a lin. regression for every given signalchunk.</p>
+<section id="id3">
+<h2>Parameters<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>signal_chunks<span class="classifier">2D-array</span></dt><dd><p>The sequenced signal.</p>
+</dd>
+<dt>cross_pos<span class="classifier">2D-list</span></dt><dd><p>The Position of each zero crossing for every signal_chunks</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h2>Returns<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>slope<span class="classifier">list</span></dt><dd><p>The slope of every lin. regression.</p>
+</dd>
+<dt>intersect<span class="classifier">list</span></dt><dd><p>The y-intercept for every lin. regression.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.mean_hists">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">mean_hists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.mean_hists" title="Link to this definition"></a></dt>
+<dd><p>Calculates the mean from all PDFs as final classifier.</p>
+<section id="id5">
+<h2>Parameters<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>hists<span class="classifier">dict</span></dt><dd><p>All five PDFs from the trainingsets.</p>
+</dd>
+<dt>thresholds<span class="classifier">dict</span></dt><dd><p>best threshold for every subset.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h2>Returns<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>mean_hist<span class="classifier">array</span></dt><dd><p>The mean PDF.</p>
+</dd>
+<dt>xedges<span class="classifier">array</span></dt><dd><p>The xedges of the bins.</p>
+</dd>
+<dt>yedges<span class="classifier">array</span></dt><dd><p>The yedges of the bins.</p>
+</dd>
+<dt>mean_thresh<span class="classifier">float</span></dt><dd><p>the mean threshold from the best thresholds.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.read_signal">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">read_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skiprows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'infer'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.read_signal" title="Link to this definition"></a></dt>
+<dd><p>Reads the signal stored in the given path.</p>
+<section id="id7">
+<h2>Parameters<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<dl>
+<dt>mod_path<span class="classifier">string</span></dt><dd><p>The modified filepath to the signalfile wit its name as last part.</p>
+<p>Syntax: path + ‘filename’</p>
+</dd>
+<dt>signal_key<span class="classifier">string</span></dt><dd><p>The keyword/number for Pandas.Dataframe signal-column.</p>
+<p>Somno:   signal_key= 2</p>
+<p>Corsano: signal_key=’value’</p>
+</dd>
+<dt>time_key<span class="classifier">string</span></dt><dd><p>The keyword/number for Pandas.Dataframe timestamp-column.</p>
+<p>Somno:   time_key=0</p>
+<p>Corsano: time_key=’date’</p>
+</dd>
+<dt>sep<span class="classifier">string, optional</span></dt><dd><p>The seperator used to seperate the columns. Only necessary for Somno. Corsanofiles use the default. The default is ‘,’.</p>
+<p>sep_somno = ‘;’</p>
+</dd>
+<dt>skiprows<span class="classifier">integer, optional</span></dt><dd><p>!!!Deprecated!!!
+The number of rows that should be skipped. The default is 0.</p>
+</dd>
+<dt>date_format<span class="classifier">string, optional</span></dt><dd><p>Date-format for the timestamps. Only necessary for Somno (“%d.%m.%Y %H:%M:%S,%f”). The default is None.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h2>Returns<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>signals<span class="classifier">array</span></dt><dd><p>The signal as a timeseries.</p>
+</dd>
+<dt>timestamps<span class="classifier">Series</span></dt><dd><p>the timestamps as pandas.Series.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.test_subsets">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">test_subsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validation_sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_hist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xedges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yedges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_thresh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.test_subsets" title="Link to this definition"></a></dt>
+<dd><p>This funktion applies the final classifier to the five subsets to check the consitency of the classifier. 
+It should be selfexplainatory that the performances should have similar values, otherwise something went wron and a redo is recommended.</p>
+<section id="id9">
+<h2>Parameters<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>validation_sets<span class="classifier">dict</span></dt><dd><p>A dictionaity containing the data of the subsets -&gt; import_training_data().</p>
+</dd>
+<dt>mean_hist<span class="classifier">array</span></dt><dd><p>The classifying PDF.</p>
+</dd>
+<dt>xedges<span class="classifier">array</span></dt><dd><p>The xedges of the bins.</p>
+</dd>
+<dt>yedges<span class="classifier">array</span></dt><dd><p>The yedges of the bins.</p>
+</dd>
+<dt>best_thresh<span class="classifier">float</span></dt><dd><p>The threshold.</p>
+</dd>
+<dt>plot<span class="classifier">TYPE, optional</span></dt><dd><p>If True, the performance of the calssifier on the subsets will be plotted in ROC-Space.
+The default is False.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h2>Returns<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing the mean fpr, mean tpr, standard deviation of fpr, standard deviation of tpr, on the respective indices.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.test_testset">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">test_testset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_hist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xedges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yedges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_thresh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_tupel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.test_testset" title="Link to this definition"></a></dt>
+<dd><p>This funktion applies the final classifier to the subsets e.g. unseen data.
+This resembles the final performancetest.</p>
+<section id="id11">
+<h2>Parameters<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>test_set<span class="classifier">dict</span></dt><dd><p>A dictionaity containing the data of the testset -&gt; import_training_data().</p>
+</dd>
+<dt>mean_hist<span class="classifier">array</span></dt><dd><p>The classifying PDF.</p>
+</dd>
+<dt>xedges<span class="classifier">array</span></dt><dd><p>The xedges of the bins.</p>
+</dd>
+<dt>yedges<span class="classifier">array</span></dt><dd><p>The yedges of the bins.</p>
+</dd>
+<dt>best_thresh<span class="classifier">float</span></dt><dd><p>The threshold.</p>
+</dd>
+<dt>val_tupel<span class="classifier">tuple, optional</span></dt><dd><p>A tuple containing the, mean fpr, mean tpr, standard deviation of fpr, standard deviation of tpr, on the respective indices.
+Only necessary if the Performance is plotted.</p>
+</dd>
+<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>If True, the performance ofe the classifier on the testset will be plottet in the ROC-space with the data of the subsets as errorbars. The default is False.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h2>Returns<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>test_fpr<span class="classifier">float</span></dt><dd><p>The fpr of the classifier on the testset.</p>
+</dd>
+<dt>test_tpr<span class="classifier">float</span></dt><dd><p>The tpr of the classifier on the testset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.train_hist">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">train_hist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validation_sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.train_hist" title="Link to this definition"></a></dt>
+<dd><p>This funktion iterates over the subsets. Here the thresholds for every subset are determined with the use of ROC.</p>
+<section id="id13">
+<h2>Parameters<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>validation_sets<span class="classifier">dict</span></dt><dd><p>A dictionaity containing the data of the subsets -&gt; import_training_data().</p>
+</dd>
+<dt>hists<span class="classifier">dict</span></dt><dd><p>A dictionairy containing the PDFs of every trainingset.</p>
+</dd>
+<dt>plot<span class="classifier">bool, optional</span></dt><dd><p>If True, all five ROC-Curves are plotted. The default is False.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h2>Returns<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>master_thresholds<span class="classifier">dict</span></dt><dd><p>A dictionairy containing the best threshold for every subset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.variance">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slopes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cross_pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.variance" title="Link to this definition"></a></dt>
+<dd><p>A function wich calculates the variance of the zero crossings relative to the lin. regression from the eva_toolkit.lin_reg() function.</p>
+<section id="id15">
+<h2>Parameters<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>slopes<span class="classifier">list</span></dt><dd><p>The slopes for every lin. regression.</p>
+</dd>
+<dt>intersect<span class="classifier">list</span></dt><dd><p>The y-intersect for ever lin. regression.</p>
+</dd>
+<dt>cross_pos<span class="classifier">list</span></dt><dd><p>The position of every zero crossing as an array for every signalchunk.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h2>Returns<a class="headerlink" href="#id16" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>var<span class="classifier">list</span></dt><dd><p>The variance of the data relative to the lin. regression</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eva_toolkit.wrapping_results">
+<span class="sig-prename descclassname"><span class="pre">eva_toolkit.</span></span><span class="sig-name descname"><span class="pre">wrapping_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#eva_toolkit.wrapping_results" title="Link to this definition"></a></dt>
+<dd><p>Counting the good and bad labeled sequences.</p>
+<section id="id17">
+<h2>Parameters<a class="headerlink" href="#id17" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>prediction<span class="classifier">array</span></dt><dd><p>The array with the prdicted labels.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h2>Returns<a class="headerlink" href="#id18" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing the number of good labels, bad labels and overall number of labels.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eva_classes.html" class="btn btn-neutral float-left" title="eva_classes module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="learn.html" class="btn btn-neutral float-right" title="learn module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, A.Kornrumpf.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

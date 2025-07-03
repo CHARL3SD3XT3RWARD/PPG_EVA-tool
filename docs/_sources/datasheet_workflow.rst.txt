@@ -1,0 +1,7 @@
+datasheet\_workflow module
+==========================
+
+.. automodule:: datasheet_workflow
+   :members:
+   :undoc-members:
+   :show-inheritance:
